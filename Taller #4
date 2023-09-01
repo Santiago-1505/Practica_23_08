@@ -1,0 +1,167 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
+
+
+     /*
+
+	- 	Realice cada punto en el orden que desee
+	- 	El ejericio debe ser realizado con los conceptos vistos en clase
+	- 	Como parte del ejercicio se proveen 5 metodos utilitarios a los cuales hay que definir los tipos de datos que considere
+		es el mas conveniente para el tipo de dato a manejar. Cada uno de estos metodos devuelve un array con el dato que se quiere analizar.
+		Por ejemplo el metodo pesos devuelve un array con los valores {70,58,3,55,63...}.
+		NOTA: Estos metodos se encuentran comentados, descomente solo el metodo del punto que este trabajando para evitar error de compilacion.
+  - 	No es necesario crear nuevos metodos, todos los puntos pueden ser programados en el metodo main
+  -   Adicionalmente y al final de la clase se ha incluido como ejemplo el metodo  public static String[] getDirecciones(String[] data). Ese metodo se usa para
+    extraer las direcciones de cada persona, las cuales son imprimidas utilizando un for desde el main
+
+	1. Pesos:
+		Imprimir los pesos
+		Calcular la media de los pesos
+
+	2. Estaturas:
+		Imprimir estaturas
+		Encontrar el menos alto
+		Encontrar el mas alto
+
+	3. Generos
+		Contar cuantas personas tienen genero Masculino (M), y cuantas con Femenino (F)
+
+	4. Nombres Completos
+		Generar una cadena que contenga todos los nombres de las personas separados por comas asi:
+		Juan Pérez,María García, Carlos Pérez
+
+	5. Edades:
+		Imprimir las edades de cada persona
+		Encontrar cual es la persona con menos año
+     */
+
+public class Main {
+
+
+    public record InformacionPersonal(String nombre, String apellido,
+                                      LocalDate fechaNacimiento,
+                                      String direccion,
+                                      String municipio,
+                                      String nivelAcademico,
+                                      String ocupacion,
+                                      char genero,
+                                      Integer peso,
+                                      double estatura) {
+    }
+
+    public static void main(String[] args) {
+
+
+        List<InformacionPersonal> personas = new ArrayList<>();
+
+        personas.add(new InformacionPersonal("Juan", "Pérez", LocalDate.parse("15/03/1985", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Calle 123", "Medellín", "Licenciatura en Ingeniería", "Ingeniero de Software", 'M', 70, 1.75D));
+        personas.add(new InformacionPersonal("María", "García", LocalDate.parse("28/07/1992", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Calle 123", "Medellín", "Maestría en Psicología", "Psicóloga Clínica", 'F', 58, 1.68D));
+        personas.add(new InformacionPersonal("Carlos", "Pérez García", LocalDate.parse("10/03/2023", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Calle 123", "Medellín", "", "", 'M', 3, 0.80D));
+        personas.add(new InformacionPersonal("Ana", "Martínez", LocalDate.parse("05/09/2009", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Calle 14", "Villa", "Bachiller", "Estudiante", 'F', 55, 1.60D));
+        personas.add(new InformacionPersonal("Luisa", "Hernández", LocalDate.parse("20/06/1989", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Carrera 789", "Envigado", "Doctorado en Economía", "Profesora Universitaria", 'F', 63, 1.70D));
+        personas.add(new InformacionPersonal("Javier", "López", LocalDate.parse("12/04/1975", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Calle San Juan", "Medellin", "Licenciatura en Arquitectura", "Arquitecto Independiente", 'M', 75, 1.82D));
+        personas.add(new InformacionPersonal("Laura", "Ramírez", LocalDate.parse("18/04/1998", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Avenida 6", "Ciudad Metropolitana", "Bachiller", "Estudiante", 'F', 52, 1.65D));
+        personas.add(new InformacionPersonal("Martín", "Torres", LocalDate.parse("30/02/1998", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Avenida 6", "Aldea", "Bachiller", "Estudiante", 'M', 68, 1.78D));
+        personas.add(new InformacionPersonal("Sofía", "Vargas", LocalDate.parse("22/07/1995", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Avenida 6", "Rionegro", "Bachiller", "Estudiante", 'F', 60, 1.63D));
+        personas.add(new InformacionPersonal("Daniel", "Sánchez", LocalDate.parse("08/12/1999", DateTimeFormatter.ofPattern("dd/MM/uuuu")), "Avenida 6", "Rionegro", "Bachiller", "Estudiante", 'M', 72, 1.79D));
+
+
+        //El metodo getDirecciones y el siguiente for se incluye como ejemplo de impresión de las direcciones
+        //String[] direcciones = getDirecciones(personas);
+        for (InformacionPersonal informacionPersonal : personas) {
+            System.out.println(informacionPersonal.direccion);
+
+        }
+
+        //1. Pesos:
+        //tipo_de_variable_para_pesos_pesos = getPesos(data);
+        System.out.println("Pesos: ");
+        //Integer[] pesos = getPesos(personas);
+        Double prom = 0D;
+        for (InformacionPersonal informacionPersonal : personas) {
+            System.out.println(informacionPersonal.peso);
+            prom += informacionPersonal.peso;
+        }
+        prom = prom / personas.size();
+        System.out.println("El peso promedio es: " + prom);
+
+        //2. Estaturas:
+        //tipo_de_variable_para_estaturas estaturas = getEstaturas( data );
+        System.out.println("Estaturas: ");
+        //Double[] estaturas = getEstaturas(personas);
+        Double menorAltura = 1000000000000D, mayorAltura = 0D;
+        for (InformacionPersonal informacionPersonal : personas) {
+            System.out.println(informacionPersonal.estatura);
+            if (mayorAltura < informacionPersonal.estatura) {
+                mayorAltura = informacionPersonal.estatura;
+            } else if (menorAltura > informacionPersonal.estatura) {
+                menorAltura = informacionPersonal.estatura;
+            }
+        }
+        System.out.println("La persona mas alta mide: " + mayorAltura);
+        System.out.println("La persona menos alta mide: " + menorAltura);
+
+        //3. Generos
+        //tipo_de_variable_para_generos generos = getGeneros( data );
+        System.out.println("Géneros: ");
+        //char[] generos = getGeneros(personas);
+        int GeneroMasculino = 0, GeneroFemenino = 0;
+        for (InformacionPersonal informacionPersonal : personas) {
+            System.out.println(informacionPersonal.genero);
+            if (informacionPersonal.genero == 'F') {
+                GeneroFemenino++;
+            } else if (informacionPersonal.genero == 'M') {
+                GeneroMasculino++;
+            }
+        }
+        System.out.println("Numero de mujeres: " + GeneroFemenino);
+        System.out.println("Numero de hombres: " + GeneroMasculino);
+        //4. Nombres Completos
+        //tipo_de_variable_para_nombres_completos nombresCompletos = getNombresCompletos( data );
+
+        System.out.println("Los Nombres Completos Son: ");
+        //String[] nombresCompletos = getNombresCompletos(personas);
+        String NombresCompletos = "";
+        for (InformacionPersonal informacionPersonal : personas) {
+            System.out.println(informacionPersonal.nombre() + " " + informacionPersonal.apellido());
+            NombresCompletos += (informacionPersonal.nombre() + " " + informacionPersonal.apellido() + ", ");
+        }
+        System.out.println(NombresCompletos);
+
+        //5. Edades:
+        //tipo_de_variable_para_fechas_de_nacimiento fechasDeNacimiento = getFechasDeNacimientos(data);
+
+        //LocalDate[] fechasDeNacimiento = getFechasDeNacimientos(personas);
+
+        System.out.println("Edades: ");
+        InformacionPersonal personaMenor = null;
+        LocalDate fechaActual = LocalDate.now();
+
+        for (InformacionPersonal informacionPersonal : personas) {
+
+
+            int edad = fechaActual.getYear() - informacionPersonal.fechaNacimiento().getYear();
+
+
+            System.out.println(informacionPersonal.nombre() + " " + informacionPersonal.apellido() + ": " + edad + " años");
+
+
+            if (personaMenor == null || informacionPersonal.fechaNacimiento().isAfter(personaMenor.fechaNacimiento())) {
+                personaMenor = informacionPersonal;
+            }
+        }
+
+        if (personaMenor != null) {
+            System.out.println("La persona más joven es: " + personaMenor.nombre() + " " + personaMenor.apellido());
+        }
+
+
+    }
+}
