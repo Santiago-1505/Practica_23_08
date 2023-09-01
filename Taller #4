@@ -159,7 +159,7 @@ public class Main {
         }
 
         if (personaMenor != null) {
-            System.out.println("La persona más joven es: " + personaMenor.nombre() + " " + personaMenor.apellido());
+            System.out.println("La persona con menos años es: " + personaMenor.nombre() + " " + personaMenor.apellido());
         }
 
 
